@@ -1,8 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhoneRetina.7.1" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="SampleTouch.iOS/SampleTouch.iOSViewController.cs">
+    <Files>
+      <File FileName="SampleTouch.iOS/SampleTouch.iOSViewController.cs" Line="29" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/masuda/Documents/git/SampleTouch/SampleTouch.iOS/SampleTouch.iOSViewController.cs" line="71" column="1" />
+      <Breakpoint file="/Users/masuda/Documents/git/SampleTouch/SampleTouch.iOS/SampleTouch.iOSViewController.cs" line="60" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

@@ -2,6 +2,7 @@
 using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using System.Collections.Generic;
 
 namespace SampleTouch.iOS
 {
@@ -19,6 +20,8 @@ namespace SampleTouch.iOS
 			// Release any cached data, images, etc that aren't in use.
 		}
 
+		List <UIImageView> drags;
+
 		#region View lifecycle
 
 		public override void ViewDidLoad ()
@@ -26,6 +29,9 @@ namespace SampleTouch.iOS
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
+			drags = new List<UIImageView> ();
+			drags.Add (this.image2);
+			drags.Add (this.image1);
 		}
 
 		public override void ViewWillAppear (bool animated)
@@ -50,6 +56,7 @@ namespace SampleTouch.iOS
 
 		#endregion
 
+		UIImageView dragItem = null;
         /// <summary>
         /// タッチ開始
         /// </summary>
@@ -58,6 +65,15 @@ namespace SampleTouch.iOS
         public override void TouchesBegan(NSSet touches, UIEvent evt)
         {
             base.TouchesBegan(touches, evt);
+
+			UITouch touch = touches.AnyObject as UITouch;
+
+			foreach (var el in this.drags) {
+				if (el.Frame.Contains (touch.LocationInView (View))) {
+					this.dragItem = el;
+					break;
+				}
+			}
         }
         /// <summary>
         /// タッチ移動
@@ -67,15 +83,23 @@ namespace SampleTouch.iOS
         public override void TouchesMoved(NSSet touches, UIEvent evt)
         {
             base.TouchesMoved(touches, evt);
-            UIImageView el = touches.AnyObject as UIImageView;
-            if (el == null) return;
-
-            PointF newPoint = (touches.AnyObject as UITouch).LocationInView(View);
-            PointF previousPoint = (touches.AnyObject as UITouch).PreviousLocationInView(View);
-
-            var frame = new RectangleF(newPoint, el.Frame.Size);
-            el.FrameForAlignmentRect(frame);
+			UITouch touch = touches.AnyObject as UITouch;
+			PointF newPoint = touch.LocationInView(View);
+			PointF previousPoint = touch.PreviousLocationInView(View);
+			if (dragItem != null ) {
+				float offsetX = previousPoint.X - newPoint.X;
+				float offsetY = previousPoint.Y - newPoint.Y;
+				dragItem.Frame = new RectangleF (
+					new PointF (dragItem.Frame.X - offsetX, dragItem.Frame.Y - offsetY),
+					dragItem.Frame.Size);
+			}
         }
+
+		public override void TouchesEnded (NSSet touches, UIEvent evt)
+		{
+			base.TouchesEnded (touches, evt);
+			dragItem = null;
+		}
     }
 }
 
