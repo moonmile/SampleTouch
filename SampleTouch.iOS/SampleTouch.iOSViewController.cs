@@ -49,6 +49,33 @@ namespace SampleTouch.iOS
 		}
 
 		#endregion
-	}
+
+        /// <summary>
+        /// タッチ開始
+        /// </summary>
+        /// <param name="touches"></param>
+        /// <param name="evt"></param>
+        public override void TouchesBegan(NSSet touches, UIEvent evt)
+        {
+            base.TouchesBegan(touches, evt);
+        }
+        /// <summary>
+        /// タッチ移動
+        /// </summary>
+        /// <param name="touches"></param>
+        /// <param name="evt"></param>
+        public override void TouchesMoved(NSSet touches, UIEvent evt)
+        {
+            base.TouchesMoved(touches, evt);
+            UIImageView el = touches.AnyObject as UIImageView;
+            if (el == null) return;
+
+            PointF newPoint = (touches.AnyObject as UITouch).LocationInView(View);
+            PointF previousPoint = (touches.AnyObject as UITouch).PreviousLocationInView(View);
+
+            var frame = new RectangleF(newPoint, el.Frame.Size);
+            el.FrameForAlignmentRect(frame);
+        }
+    }
 }
 
